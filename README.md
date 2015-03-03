@@ -16,7 +16,7 @@ Install and Running
     $ cd fabadig
     $ emacs rabbit.py
   
-than replace `r = Rabbit('facebook-oilnam’)` with (the path to) your own data directory and run the script with no args. It might take a little while depending on the size of your `message.htm` (still less then a minute on my Macbook Pro).
+and replace `r = Rabbit('facebook-oilnam’)` with (the path to) your own data directory and run the script with no args. It might take a little while depending on the size of your `message.htm` (still less then a minute on my Macbook Pro).
 
 Authors
 -------
