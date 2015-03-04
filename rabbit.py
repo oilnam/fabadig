@@ -58,7 +58,8 @@ class Rabbit(object):
             revChat.write('<html><head><meta charset="utf-8"></head>'
                           '<link rel="stylesheet" href="style.css" type="text/css"/>')
             for item in stack:
-                revChat.write(item.encode('utf-8') + '</html>')
+                revChat.write(item.encode('utf-8'))
+            revChat.write('</html>')
 
 
     def rank_by_size(self, _dir):
@@ -83,7 +84,7 @@ class Rabbit(object):
         values = []
         for pos, val in enumerate(pairs):
             relative_value = (100 * val[0]) / top_value
-            values.append( ( pos+1, val[1], relative_value) )
+            values.append( (pos+1, val[1], relative_value) )
 
         html = template.render(generated = generated.contents[0],
                                values = values)
