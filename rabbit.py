@@ -35,8 +35,9 @@ class Rabbit(object):
                 chatBetween = chatBetween[:64]
 
             with open('msg/' + chatBetween + '.html', 'w') as newChat:
-                newChat.write('<link rel="stylesheet" href="style.css" type="text/css"/>')
-                newChat.write(t.encode('utf-8'))
+                newChat.write('<html><head><meta charset="utf-8"></head>'
+                              '<link rel="stylesheet" href="style.css" type="text/css"/>')
+                newChat.write(t.encode('utf-8') + '</html>')
 
             self.reverse(t, chatBetween)
 
@@ -54,9 +55,10 @@ class Rabbit(object):
         stack.reverse()
 
         with open('msg_asc/rev-' + _chatBetween + '.html', 'w') as revChat:
-            revChat.write('<link rel="stylesheet" href="style.css" type="text/css"/>')
+            revChat.write('<html><head><meta charset="utf-8"></head>'
+                          '<link rel="stylesheet" href="style.css" type="text/css"/>')
             for item in stack:
-                revChat.write(item.encode('utf-8'))
+                revChat.write(item.encode('utf-8') + '</html>')
 
 
     def rank_by_size(self, _dir):
