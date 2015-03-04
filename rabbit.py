@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 
 from bs4 import BeautifulSoup
+import jinja2
 import os
 import shutil
+
 
 class Rabbit(object):
     ''' if it has do dig, it might as well be a rabbit '''
@@ -34,7 +36,7 @@ class Rabbit(object):
 
             with open('msg/' + chatBetween + '.html', 'w') as newChat:
                 newChat.write('<link rel="stylesheet" href="style.css" type="text/css"/>')
-                newChat.write(t.encode('latin-1'))
+                newChat.write(t.encode('utf-8'))
 
             self.reverse(t, chatBetween)
 
@@ -46,19 +48,19 @@ class Rabbit(object):
  
         stack = []
         for s in msgDivs:
-            stack.append(s.find_next('p').encode('latin-1'))
-            stack.append(s.encode('latin-1'))
+            stack.append(s.find_next('p'))
+            stack.append(s)
 
         stack.reverse()
 
         with open('msg_asc/rev-' + _chatBetween + '.html', 'w') as revChat:
             revChat.write('<link rel="stylesheet" href="style.css" type="text/css"/>')
             for item in stack:
-                revChat.write(item)
+                revChat.write(item.encode('utf-8'))
 
 
     def rank_by_size(self, _dir):
-        chatList = os.listdir(_dir)
+        chatList = os.listdir(unicode(_dir))
         pairs = []
         for chat in chatList:
             if chat.endswith('.html'):
@@ -67,18 +69,25 @@ class Rabbit(object):
                 pairs.append( (size, chat) )
         pairs.sort(key=lambda s: s[0], reverse=True)
 
-        # dumping everything ASCII style
+        # creating html report
         top_value = pairs[0][0]
         s = BeautifulSoup(open(self.fb + '/index.htm'))
         generated = s.find('div', class_ = 'footer')
 
-        with open('report.txt', 'w') as report:
-            report.write('=> Digging into the FB chat hole (100-point grading scale) \n')
-            report.write('=> '+ generated.contents[0].encode('latin-1') + '\n\n')
+        tempLoader = jinja2.FileSystemLoader('templates')
+        env = jinja2.Environment(loader = tempLoader)
+        template = env.get_template('index.jinja')
 
-            for pos, val in enumerate(pairs):
-                relative_value = (100 * val[0]) / top_value
-                report.write('{0} [{3}]\n{1} ({2}%)\n\n'.format(val[1], '#'*relative_value, relative_value, pos+1))
+        values = []
+        for pos, val in enumerate(pairs):
+            relative_value = (100 * val[0]) / top_value
+            values.append( ( pos+1, val[1], relative_value) )
+
+        html = template.render(generated = generated.contents[0],
+                               values = values)
+
+        with open('report.html', 'w') as f:
+            f.write(html.encode('utf-8'))
 
 
 def main():

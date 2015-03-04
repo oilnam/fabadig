@@ -1,0 +1,19 @@
+*{font-family : "Courier New", Courier, monospace; }
+
+.centered-content {
+    max-width: 980px;
+    margin: 40px auto;
+    font-size : 0.925em;
+}
+
+.ranking {
+    border: 1px dotted black;
+    padding: 20px 20px 20px 20px;
+}
+
+a:link {
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}

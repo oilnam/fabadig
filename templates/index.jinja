@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet"
+	  href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+    <link rel="stylesheet" type="text/css" href="templates/style.css">
+  </head>
+
+  <body>
+
+    <div class="pure-g centered-content">
+      <div class="pure-u-1-1 ranking">
+
+	<div class="pure-u-1-1">
+	  <p> Report generated with
+	    <a target="blank" href="https://github.com/oilnam/fabadig">fabadig</a></p>
+	  <p>Based on data {{ generated }} </p>
+	</div>
+
+	<div class="pure-u-1-1">
+	  {% for i in values %}
+	  <p>  {{ i[0] }}. 
+	    <a target="blank"  href="msg_asc/rev-{{ i[1] }}">{{ i[1] }}</a> 
+	    ({{ i[2] }})
+	    <br />
+	    <i>{{ '#' * i[2] }}</i>
+	  </p>
+	  {% endfor %}
+
+	</div>
+      </div>
+    </div>
+
+  </body>
+
+</html>
