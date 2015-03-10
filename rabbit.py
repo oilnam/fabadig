@@ -23,6 +23,13 @@ class Rabbit(object):
             shutil.copytree('msg', 'msg_asc')
 
 
+    def convert(self, v, suffix='B'):
+        for unit in ['', 'Ki', 'Mi', 'Gi']:
+            if abs(v) < 1024.0:
+                return '{0:.1f} {1}{2}'.format(v, unit, suffix)
+            v /= 1024.0
+
+
     def dig(self, _target='messages.htm'):
         ''' splits the target in one <thread> per file '''
 
@@ -84,7 +91,8 @@ class Rabbit(object):
         values = []
         for pos, val in enumerate(pairs):
             relative_value = (100 * val[0]) / top_value
-            values.append( (pos+1, val[1], relative_value) )
+            human_size = self.convert(val[0])
+            values.append( (pos+1, val[1], relative_value, human_size) )
 
         html = template.render(generated = generated.contents[0],
                                values = values)
