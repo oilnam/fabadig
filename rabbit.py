@@ -7,18 +7,18 @@ import shutil
 
 
 class Rabbit(object):
-    ''' if it has do dig, it might as well be a rabbit '''
+    """ if it has do dig, it might as well be a rabbit """
 
     def __init__(self, _fbData):
         self.fb = _fbData
 
 
     def prepare(self):
-        ''' sets up the environemnt '''
-        
+        """ sets up the environemnt """
+
         if not os.path.exists('msg'):
             os.makedirs('msg')
-            shutil.copyfile(self.fb + '/html/style.css', 'msg/style.css')
+            shutil.copyfile(os.path.join(self.fb, 'html/style.css'), 'msg/style.css')
         if not os.path.exists('msg_asc'):
             shutil.copytree('msg', 'msg_asc')
 
@@ -31,9 +31,10 @@ class Rabbit(object):
 
 
     def dig(self, _target='messages.htm'):
-        ''' splits the target in one <thread> per file '''
+        """ splits the target in one <thread> per file """
 
-        s = BeautifulSoup(open(self.fb + '/html/' + _target))
+        s = BeautifulSoup(open(os.path.join(self.fb, 'html/', _target)))
+
         threads = s.find_all('div', class_ = 'thread')
 
         for t in threads:
@@ -41,7 +42,7 @@ class Rabbit(object):
             if len(chatBetween) > 64:
                 chatBetween = chatBetween[:64]
 
-            with open('msg/' + chatBetween + '.html', 'w') as newChat:
+            with open(os.path.join('msg', chatBetween + '.html'), 'w') as newChat:
                 newChat.write('<html><head><meta charset="utf-8"></head>'
                               '<link rel="stylesheet" href="style.css" type="text/css"/>')
                 newChat.write(t.encode('utf-8') + '</html>')
@@ -50,7 +51,7 @@ class Rabbit(object):
 
 
     def reverse(self, _t, _chatBetween):
-        ''' reverses a chat from DESC to ASC order '''
+        """ reverses a chat from DESC to ASC order """
 
         msgDivs = _t.find_all('div', class_ = 'message')
  
@@ -61,7 +62,7 @@ class Rabbit(object):
 
         stack.reverse()
 
-        with open('msg_asc/rev-' + _chatBetween + '.html', 'w') as revChat:
+        with open(os.path.join('msg_asc', 'rev-' + _chatBetween + '.html'), 'w') as revChat:
             revChat.write('<html><head><meta charset="utf-8"></head>'
                           '<link rel="stylesheet" href="style.css" type="text/css"/>')
             for item in stack:
@@ -81,7 +82,7 @@ class Rabbit(object):
 
         # creating html report
         top_value = pairs[0][0]
-        s = BeautifulSoup(open(self.fb + '/index.htm'))
+        s = BeautifulSoup(open(os.path.join(self.fb, 'index.htm')))
         generated = s.find('div', class_ = 'footer')
 
         tempLoader = jinja2.FileSystemLoader('templates')

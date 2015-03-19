@@ -11,13 +11,17 @@ Fabadi helps you turn the [copy of your Facebook data](https://www.facebook.com/
 
 Install and Running
 -------------------
-    $ pip install BeautifulSoup4
-    $ pip install Jinja2
     $ git clone https://github.com/oilnam/fabadig.git
     $ cd fabadig
-    $ emacs rabbit.py
+    $ pip install BeautifulSoup4
+    $ pip install Jinja2
+    $ nano rabbit.py
   
-replace `r = Rabbit('facebook-oilnam’)` with (the path to) your own data directory and run the script with no args. It might take a little while depending on the size of your `message.htm` (still less then a minute on my Macbook Pro).
+replace `r = Rabbit('facebook-oilnam’)` with (the path to) your own
+ data directory and run the script with no args:
+    $ python rabbit.py
+
+ It might take a little while depending on the size of your `message.htm` (still less then a minute on my Macbook Pro).
 
 Authors
 -------
