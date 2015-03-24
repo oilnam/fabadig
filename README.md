@@ -13,13 +13,9 @@ Install and Running
 -------------------
     $ git clone https://github.com/oilnam/fabadig.git
     $ cd fabadig
-    $ pip install BeautifulSoup4
-    $ pip install Jinja2
-    $ nano rabbit.py
+    $ pip install -r requirements.txt
+    $ python rabbit.py <your facebook folder>
   
-replace `r = Rabbit('facebook-oilnam’)` with (the path to) your own
- data directory and run the script with no args:
-    $ python rabbit.py
 
  It might take a little while depending on the size of your `message.htm` (still less then a minute on my Macbook Pro).
 

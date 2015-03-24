@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 import jinja2
 import os
 import shutil
+import sys
 
 
 class Rabbit(object):
@@ -104,8 +105,11 @@ class Rabbit(object):
 
 def main():
 
-    # replace this with your own facebook directory
-    r = Rabbit('facebook-oilnam')
+    if len(sys.argv) != 2:
+        print 'usage: python {0} <facebook directory>'.format(sys.argv[0])
+        sys.exit(1)
+
+    r = Rabbit(sys.argv[1])
     r.prepare()
     r.dig()
     r.rank_by_size('msg')
