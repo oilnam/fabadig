@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from bs4 import BeautifulSoup
+from collections import deque
 import jinja2
 import os
 import shutil
@@ -56,17 +57,15 @@ class Rabbit(object):
 
         msgDivs = _t.find_all('div', class_ = 'message')
  
-        stack = []
+        q = deque([])
         for s in msgDivs:
-            stack.append(s.find_next('p'))
-            stack.append(s)
-
-        stack.reverse()
+            q.appendleft(s.find_next('p'))
+            q.appendleft(s)
 
         with open(os.path.join('msg_asc', 'rev-' + _chatBetween + '.html'), 'w') as revChat:
             revChat.write('<html><head><meta charset="utf-8"></head>'
                           '<link rel="stylesheet" href="style.css" type="text/css"/>')
-            for item in stack:
+            for item in q:
                 revChat.write(item.encode('utf-8'))
             revChat.write('</html>')
 
